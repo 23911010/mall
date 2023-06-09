@@ -1,87 +1,30 @@
-# 
+# 주제
+주문 시스템
 
-## Model
-www.msaez.io/#/storming/348c568840d498d964fbbd1de4795215
+# 서비스 시나리오
 
-## Before Running Services
-### Make sure there is a Kafka server running
-```
-cd kafka
-docker-compose up
-```
-- Check the Kafka messages:
-```
-cd kafka
-docker-compose exec -it kafka /bin/bash
-cd /bin
-./kafka-console-consumer --bootstrap-server localhost:9092 --topic
-```
+요구사항
+1. 고객이 주문한다
+2. 주문이 되면 배송을 시작한다
+3. 배송이 완료되면 재고에서 차감한다
 
-## Run the backend micro-services
-See the README.md files inside the each microservices directory:
+## Event Storming 결과
+![image](https://github.com/23911010/mall/assets/136041567/3328f9a4-a2fc-418f-b5e7-7e1b58d06312)
 
-- order
-- delivery
-- product
+## 쿠버네티스 내 마이크로서비스 배포 여부
+![image](https://github.com/23911010/mall/assets/136041567/e1ff8116-32ab-4e17-afa8-59fc639854f5)
 
+## 오토스케일 아웃
+order
+![image](https://github.com/23911010/mall/assets/136041567/4352a754-90a4-459d-ad3b-38ff8aa9f129)
+![image](https://github.com/23911010/mall/assets/136041567/f3fb1bd1-88b7-4057-addd-cf82d50603dd)
+![image](https://github.com/23911010/mall/assets/136041567/0532c4c6-3718-47bf-b06d-67039bbdd90c)
 
-## Run API Gateway (Spring Gateway)
-```
-cd gateway
-mvn spring-boot:run
-```
+delivery
+![image](https://github.com/23911010/mall/assets/136041567/f4719549-8992-470c-8dcc-68ec67c3003f)
+![image](https://github.com/23911010/mall/assets/136041567/22430164-cb87-4d3a-9bdd-a5bb3bf15489)
 
-## Test by API
-- order
-```
- http :8088/orders id="id" productName="productName" productId="productId" customerId="customerId" qty="qty" 
-```
-- delivery
-```
- http :8088/deliveries id="id" orderId="orderId" productName="productName" productId="productId" customerId="customerId" qty="qty" status="status" 
-```
-- product
-```
- http :8088/stocks id="id" productName="productName" stock="stock" 
-```
-
-
-## Run the frontend
-```
-cd frontend
-npm i
-npm run serve
-```
-
-## Test by UI
-Open a browser to localhost:8088
-
-## Required Utilities
-
-- httpie (alternative for curl / POSTMAN) and network utils
-```
-sudo apt-get update
-sudo apt-get install net-tools
-sudo apt install iputils-ping
-pip install httpie
-```
-
-- kubernetes utilities (kubectl)
-```
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-```
-
-- aws cli (aws)
-```
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-```
-
-- eksctl 
-```
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv /tmp/eksctl /usr/local/bin
-```
-
+product
+![image](https://github.com/23911010/mall/assets/136041567/3159d9d3-0553-4d81-a48b-15a09396fe11)
+![image](https://github.com/23911010/mall/assets/136041567/aed0531d-8334-4511-a54c-c15de3528286)
+![image](https://github.com/23911010/mall/assets/136041567/69fd076a-9aa8-4cbb-b0fc-9cb0a8ca7418)
